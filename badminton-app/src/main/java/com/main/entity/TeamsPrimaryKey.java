@@ -22,5 +22,5 @@ public class TeamsPrimaryKey implements Serializable {
 	private int teamId;
 	@ManyToOne
 	@JoinColumn(name = "eventId",referencedColumnName = "eventId")
-	Event eventid;
+	Event eventId;
 }

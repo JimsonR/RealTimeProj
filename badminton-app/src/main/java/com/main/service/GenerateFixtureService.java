@@ -47,7 +47,7 @@ public class GenerateFixtureService {
 		int byesForRound1 = teams.size() - playersForRound1;
 		int matches = playersForRound1/2;
 		for(int i = 0; i < playersForRound1;i += 2) {
-			
+			System.out.println(teams.get(i) + " vs "+teams.get(i+1));
 		}
 	}
 	
@@ -61,8 +61,9 @@ public class GenerateFixtureService {
 		Event event = eventRepository.findByEventId(eventId);
 		event.setTotalRounds(totalRounds);
 		eventRepository.save(event);
-		List<Teams>teams = teamsRepository.findByEventId(eventId);
+		List<Teams>teams = teamsRepository.findByPrimaryKeyEventId(event);
 		createMatchesForRound1(teams,totalRounds);
+//		System.out.println(teams.toString());
 		
 	}
 	

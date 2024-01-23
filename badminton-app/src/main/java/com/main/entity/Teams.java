@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-//@AllArgsConstructor
-//@NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Teams {
 	

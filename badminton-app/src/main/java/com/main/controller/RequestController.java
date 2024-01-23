@@ -24,6 +24,7 @@ import com.main.model.SignUpModel;
 import com.main.repository.TournamentRepository;
 import com.main.service.EventService;
 import com.main.service.GenerateFixtureService;
+//import com.main.service.GenerateFixtureService;
 import com.main.service.OrganizationService;
 import com.main.service.ServiceImpl;
 import com.main.service.TournamentService;
@@ -148,8 +149,8 @@ public class RequestController {
 	int createEventRequest(@RequestBody List<CreateEventModel> createEventModel,HttpServletRequest request) {
 		return eventService.handleCreateEventRequest(createEventModel,Integer.valueOf(request.getHeader("tournamentId")));
 	}
-	
-	@GetMapping("/generateFixtures")
+//	
+	@PostMapping("/generateFixtures")
 	int generateFixtureRequest(HttpServletRequest request) {
 		generateFixtureService.handleGenerateFixtureRequest(Integer.valueOf(request.getHeader("eventId")));
 		return 2;
