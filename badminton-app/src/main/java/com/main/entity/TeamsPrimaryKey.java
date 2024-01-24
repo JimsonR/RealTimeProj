@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.springframework.stereotype.Component;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,7 @@ public class TeamsPrimaryKey implements Serializable {
 
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int teamId;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL,optional=false)
 	@JoinColumn(name = "eventId",referencedColumnName = "eventId")
 	Event eventId;
 }
