@@ -1,12 +1,19 @@
 package com.main.service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.main.entity.Event;
 import com.main.entity.Teams;
+import com.main.entity.TeamsNEvent;
+import com.main.entity.TeamsNEventId;
+import com.main.model.EventMimic;
+import com.main.model.QueryResponse;
 import com.main.repository.EventRepository;
+import com.main.repository.TeamsNEventsRepository;
 import com.main.repository.TeamsRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -53,17 +60,25 @@ public class GenerateFixtureService {
 	
 	
 
-	private final TeamsRepository teamsRepository;
+	private final TeamsNEventsRepository teamsNEventsRepository;
 	private final EventRepository eventRepository;
 	public void handleGenerateFixtureRequest(int eventId) {
-		int numberOfTeams =  teamsRepository.countByEventId(eventId);
-		int totalRounds = findTotalRounds(numberOfTeams);
 		Event event = eventRepository.findByEventId(eventId);
+		int numberOfTeams =  teamsNEventsRepository.countByTeamsNEventIdEventId(event);
+		int totalRounds = findTotalRounds(numberOfTeams);
 		event.setTotalRounds(totalRounds);
 		eventRepository.save(event);
-		List<Teams>teams = teamsRepository.findByPrimaryKeyEventId(event);
-		createMatchesForRound1(teams,totalRounds);
-//		System.out.println(teams.toString());
+//		EventMimic teams = teamsNEventsRepository.findByTeamsNEventIdEventId(1);
+		 List<QueryResponse> teams = teamsNEventsRepository.findByTeamsNEventIdEventId(1);
+//		createMatchesForRound1(teams,totalRounds);
+//		System.out.println(teams.getTeamId());
+		System.out.println(teams.toString());
+		for (QueryResponse team : teams) {
+		    System.out.println("Team ID: "+ team.getTeamId()+" Email:"+ team.getEmailId() + " player2:"+team.getPlayer2());
+		    // Print other relevant information using additional getters if needed
+		    // System.out.println("Player 1: " + team.getPlayer1());
+		    // System.out.println("Player 2: " + team.getPlayer2());
+		}
 		
 	}
 	

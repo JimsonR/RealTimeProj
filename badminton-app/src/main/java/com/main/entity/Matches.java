@@ -24,31 +24,24 @@ public class Matches {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int matchId;
 	
-	@ManyToOne(optional=false,cascade = CascadeType.ALL)
-//	@MapsId("teamId")
-	 @JoinColumns({
-	        @JoinColumn(name = "team1Id", referencedColumnName = "teamId"),
-	        @JoinColumn(name = "event1Id", referencedColumnName = "eventId")
-	    })
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="eventId",referencedColumnName = "eventId")
+	private Event eventId;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "team1Id", referencedColumnName = "teamId")
 	private Teams team1Id;
 	
-	@ManyToOne(optional=false,cascade = CascadeType.ALL)
-//	@MapsId("teamId")
-	@JoinColumns({
-        @JoinColumn(name = "team2Id", referencedColumnName = "teamId"),
-        @JoinColumn(name = "event2Id", referencedColumnName = "eventId")
-    })
+	@ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "team2Id", referencedColumnName = "teamId")
 	private Teams team2Id;
 	
 	private int matchNumber;
 	
-	@ManyToOne(optional=false,cascade = CascadeType.ALL)
-//	@MapsId("teamId")
-	@JoinColumns({
-        @JoinColumn(name = "teamWId", referencedColumnName = "teamId"),
-        @JoinColumn(name = "eventWId", referencedColumnName = "eventId")
-    })
+	@ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "winnerId", referencedColumnName = "teamId")
 	private Teams winnerId;
+	
 	private int courtNumber;
 	private boolean duece;
 	private int totalSets;

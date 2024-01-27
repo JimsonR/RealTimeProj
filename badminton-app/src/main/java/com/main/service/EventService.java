@@ -31,7 +31,7 @@ public class EventService {
 					.tournamentId(tournament)
 					.matchType(event.getMatchType())
 					.entryFee(event.getEntryFee())
-					.allowBookings(event.getAllowBookings())
+//					.allowBookings(event.getAllowBookings())
 					.build();
 			
 			 eventRepository.save(newEvent);
