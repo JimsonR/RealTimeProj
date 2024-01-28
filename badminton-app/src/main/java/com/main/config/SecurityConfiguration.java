@@ -24,7 +24,7 @@ public class SecurityConfiguration {
 //		}
 
 	private static String[] WHITE_LIST = { "/signup", "/login", "/verificationLink**", "/forgotPassword",
-			"/resetPassword","/" };
+			"/resetPassword","/**" };
 	private final AuthenticationProvider authenticationProvider;
 	private final SecurityFilter securityFilter;
 

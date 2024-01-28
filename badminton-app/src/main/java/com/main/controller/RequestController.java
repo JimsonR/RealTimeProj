@@ -155,5 +155,8 @@ public class RequestController {
 		generateFixtureService.handleGenerateFixtureRequest(Integer.valueOf(request.getHeader("eventId")));
 		return 2;
 	}
+	
+//	@PostMapping("/promoteWinner")
+//	int promoteWinner()
 
 }

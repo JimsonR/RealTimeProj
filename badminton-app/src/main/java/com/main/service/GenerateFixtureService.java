@@ -4,15 +4,21 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import com.main.entity.Byes;
+import com.main.entity.ByesId;
 import com.main.entity.Event;
+import com.main.entity.Matches;
 import com.main.entity.Teams;
 import com.main.entity.TeamsNEvent;
 import com.main.entity.TeamsNEventId;
 import com.main.model.EventMimic;
 import com.main.model.QueryResponse;
+import com.main.repository.ByesRepository;
 import com.main.repository.EventRepository;
+import com.main.repository.MatchesRepository;
 import com.main.repository.TeamsNEventsRepository;
 import com.main.repository.TeamsRepository;
 
@@ -22,6 +28,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GenerateFixtureService {
 	
+
+	private final TeamsNEventsRepository teamsNEventsRepository;
+	private final EventRepository eventRepository;
+	private final TeamsRepository teamsRepository;
+	private final MatchesRepository matchesRepository;
+	private final ByesRepository byesRepository;
 	//finds total rounds for participants
 	private int findTotalRounds(int numberOfTeams) {
 		int rounds = 1;
@@ -39,8 +51,9 @@ public class GenerateFixtureService {
 		return players - byes;
 	}
 	
+	
 	//to create matches for round1
-	private void createMatchesForRound1(List<Teams> teams, int totalRounds) {
+	private void createMatchesForRound1(List<Teams> teams, int totalRounds, Event event) {
 		
 		//shuffle the teams using Fisher Yates Method
 		for(int i = teams.size()-1;i >= 0;i--) {
@@ -53,32 +66,56 @@ public class GenerateFixtureService {
 		int playersForRound1 = getPossiblePlayersForRound1(teams.size(),totalRounds);
 		int byesForRound1 = teams.size() - playersForRound1;
 		int matches = playersForRound1/2;
+		int count = 1;
+		event.setTotalMatches(matches);;
+		event.setTotalRounds(totalRounds);
+		
+		eventRepository.save(event);
+		System.out.println(matches+" :"+totalRounds);
 		for(int i = 0; i < playersForRound1;i += 2) {
-			System.out.println(teams.get(i) + " vs "+teams.get(i+1));
+//			System.out.println(teams.get(i) + " vs "+teams.get(i+1));
+			Matches newMatch = Matches.builder()
+					.team1Id(teams.get(i))
+					.team2Id(teams.get(i+1))
+					.eventId(event)
+					.matchNumber(count++)
+					.build();
+			matchesRepository.save(newMatch);
+			
+		}
+		
+		for(int i = playersForRound1;i < teams.size();i++) {
+			ByesId newByesId = ByesId.builder().eventId(event).teamId(teams.get(i)).build();
+			Byes newBye = Byes.builder().byesId(newByesId).build();
+			byesRepository.save(newBye);
 		}
 	}
 	
 	
 
-	private final TeamsNEventsRepository teamsNEventsRepository;
-	private final EventRepository eventRepository;
+	
 	public void handleGenerateFixtureRequest(int eventId) {
 		Event event = eventRepository.findByEventId(eventId);
 		int numberOfTeams =  teamsNEventsRepository.countByTeamsNEventIdEventId(event);
 		int totalRounds = findTotalRounds(numberOfTeams);
-		event.setTotalRounds(totalRounds);
-		eventRepository.save(event);
+//		event.setTotalRounds(totalRounds);
+//		eventRepository.save(event);
 //		EventMimic teams = teamsNEventsRepository.findByTeamsNEventIdEventId(1);
-		 List<QueryResponse> teams = teamsNEventsRepository.findByTeamsNEventIdEventId(1);
-//		createMatchesForRound1(teams,totalRounds);
+//		List<Integer> teams = teamsNEventsRepository.findByTeamsNEventIdEventId(1);
+		List<Teams> teams = teamsRepository.findByTeamsNEventIdEventId(eventId);
+		createMatchesForRound1(teams,totalRounds,event);
+		
+		
+		
+		
 //		System.out.println(teams.getTeamId());
-		System.out.println(teams.toString());
-		for (QueryResponse team : teams) {
-		    System.out.println("Team ID: "+ team.getTeamId()+" Email:"+ team.getEmailId() + " player2:"+team.getPlayer2());
-		    // Print other relevant information using additional getters if needed
-		    // System.out.println("Player 1: " + team.getPlayer1());
-		    // System.out.println("Player 2: " + team.getPlayer2());
-		}
+////		System.out.println(teams.toString());
+//		for (Teams team : teams) {
+//		    System.out.println("Team ID: "+ team.getTeamId()+" Email:"+ team.getEmailId() + " player2:"+team.getPlayer2());
+//		    // Print other relevant information using additional getters if needed
+//		    // System.out.println("Player 1: " + team.getPlayer1());
+//		    // System.out.println("Player 2: " + team.getPlayer2());
+//		}
 		
 	}
 	

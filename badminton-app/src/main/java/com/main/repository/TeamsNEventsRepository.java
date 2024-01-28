@@ -24,12 +24,13 @@ public interface TeamsNEventsRepository extends JpaRepository<TeamsNEvent, Teams
 //	<T> List<T> findByTeamsNEventIdEventId(int eventId);
 	 @Query(
 		        nativeQuery = true,
-		        value = "SELECT t.team_id AS TeamId,t.player1 AS Player1,t.player2,t.email_id AS EmailId, t.phone_number AS PhoneNumber " +
+		        value = "SELECT t.team_id AS TeamId "+
 		                "FROM teams t " +
 		                "JOIN teamsnevent te ON t.team_id = te.team_id " +
 		                "WHERE te.event_id = ?1"
 		    )
-		List<QueryResponse> findByTeamsNEventIdEventId(int eventId);
+	 List<Integer> findByTeamsNEventIdEventId(int eventId);
+//		List<QueryResponse> findByTeamsNEventIdEventId(int eventId);
 
 //	@Query(nativeQuery=true,value="select tms.* from teams tms join teamsnevent tmsnevnt on tms.team_id = tmsnevnt.team_id where tmsnevnt.event_id = ?1")
 //	List<Teams> findByTeamsNEventIdEventId(int eventId);

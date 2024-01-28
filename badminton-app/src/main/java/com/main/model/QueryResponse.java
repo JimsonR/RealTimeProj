@@ -8,9 +8,9 @@ public interface QueryResponse {
 //	int getEventId();
 //	EventMimic getTeamsId();
 //	TeamsNEventId getTeamsNEventId();
-//	int getTeamId();
-	 String getPlayer1();
-	 String getPlayer2();
-	 String getEmailId();
-	 String getPhoneNumber();
+////	int getTeamId();
+//	 String getPlayer1();
+//	 String getPlayer2();
+//	 String getEmailId();
+//	 String getPhoneNumber();
 }
