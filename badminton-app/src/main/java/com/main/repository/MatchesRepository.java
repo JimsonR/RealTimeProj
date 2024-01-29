@@ -7,5 +7,9 @@ import com.main.entity.Matches;
 
 @Repository
 public interface MatchesRepository extends JpaRepository<Matches, Integer>{
-	
+	Matches findByMatchId(int matchId);
+
+	boolean existsByMatchNumberAndRound(int matchNumber, int round);
+
+	Matches findByMatchNumberAndRound(int matchNumber, int round);
 }

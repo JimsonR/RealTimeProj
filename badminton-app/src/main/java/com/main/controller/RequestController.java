@@ -20,12 +20,14 @@ import com.main.model.ForgotPasswordModel;
 import com.main.model.LoginModel;
 import com.main.model.LoginResponseModel;
 import com.main.model.PasswordResetModel;
+import com.main.model.PromoteWinnerModel;
 import com.main.model.SignUpModel;
 import com.main.repository.TournamentRepository;
 import com.main.service.EventService;
 import com.main.service.GenerateFixtureService;
 //import com.main.service.GenerateFixtureService;
 import com.main.service.OrganizationService;
+import com.main.service.PromoteWinnerService;
 import com.main.service.ServiceImpl;
 import com.main.service.TournamentService;
 
@@ -41,6 +43,7 @@ public class RequestController {
 	private final TournamentService tournamentService;
 	private final EventService eventService;
 	private final GenerateFixtureService generateFixtureService;
+	private final PromoteWinnerService promoteWinnerService;
 	@GetMapping("/ab")
 	String index() {
 		System.out.println("hello");
@@ -156,7 +159,9 @@ public class RequestController {
 		return 2;
 	}
 	
-//	@PostMapping("/promoteWinner")
-//	int promoteWinner()
+	@PostMapping("/promoteWinner")
+	int promoteWinner(@RequestBody PromoteWinnerModel promoteWinnerModel ) {
+		return promoteWinnerService.handlepromoteWinnerRequest(promoteWinnerModel);
+	}
 
 }

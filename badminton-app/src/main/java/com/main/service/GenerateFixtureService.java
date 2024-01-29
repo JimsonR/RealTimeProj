@@ -78,6 +78,7 @@ public class GenerateFixtureService {
 					.team1Id(teams.get(i))
 					.team2Id(teams.get(i+1))
 					.eventId(event)
+					.round(1)
 					.matchNumber(count++)
 					.build();
 			matchesRepository.save(newMatch);

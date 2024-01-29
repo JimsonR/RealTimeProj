@@ -42,6 +42,7 @@ public class Matches {
     @JoinColumn(name = "winnerId", referencedColumnName = "teamId")
 	private Teams winnerId;
 	
+	private int round;
 	private int courtNumber;
 	private boolean duece;
 	private int totalSets;
