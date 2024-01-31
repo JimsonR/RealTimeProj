@@ -97,18 +97,25 @@ public class GenerateFixtureService {
 	
 	public void handleGenerateFixtureRequest(int eventId) {
 		Event event = eventRepository.findByEventId(eventId);
-		int numberOfTeams =  teamsNEventsRepository.countByTeamsNEventIdEventId(event);
-		int totalRounds = findTotalRounds(numberOfTeams);
+		int numberOfTeams = teamsNEventsRepository.countByTeamsNEventIdEventId(event);
+		if(event.getMatchType() == 2){
+			int qualifiersPerPool = event.getQualifiersPerPool();
+			int totalNumberOfPools = event.getTotalPools();
+			int totalRounds = 1 + (int) (Math.log (qualifiersPerPool * totalNumberOfPools)/Math.log(2)) ;
+			event.setTotalRounds(totalRounds);
+			eventRepository.save(event);
+			generateRoundRobinEliminationFixture();
+		}
+		else if(event.getMatchType() == 1) {
+			int totalRounds = findTotalRounds(numberOfTeams);
 //		event.setTotalRounds(totalRounds);
 //		eventRepository.save(event);
 //		EventMimic teams = teamsNEventsRepository.findByTeamsNEventIdEventId(1);
 //		List<Integer> teams = teamsNEventsRepository.findByTeamsNEventIdEventId(1);
-		List<Teams> teams = teamsRepository.findByTeamsNEventIdEventId(eventId);
-		createMatchesForRound1(teams,totalRounds,event);
-		
-		
-		
-		
+			List<Teams> teams = teamsRepository.findByTeamsNEventIdEventId(eventId);
+			createMatchesForRound1(teams, totalRounds, event);
+
+
 //		System.out.println(teams.getTeamId());
 ////		System.out.println(teams.toString());
 //		for (Teams team : teams) {
@@ -117,8 +124,12 @@ public class GenerateFixtureService {
 //		    // System.out.println("Player 1: " + team.getPlayer1());
 //		    // System.out.println("Player 2: " + team.getPlayer2());
 //		}
+
+		}
 		
 	}
-	
-	
+
+	void generateRoundRobinEliminationFixture(){
+		
+	}
 }
