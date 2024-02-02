@@ -136,18 +136,18 @@ public class GenerateFixtureService {
 	void generateRoundRobinEliminationFixture(Event event,int totalNumberOfPools, List<Teams> teams,int numberOfTeams){
 		int estTeamsPerPool = numberOfTeams/totalNumberOfPools;
 		Map<Integer,List<Teams>> poolMap = new HashMap<>();
-		int pool = 1,teamsIterator=0;
-		for(teamsIterator = 0;teamsIterator < teams.size();teamsIterator += estTeamsPerPool) {
+		int teamsIterator=0;
+		for(int pool = 1;pool <= totalNumberOfPools;pool++) {
 			List<Teams>currTeams = new ArrayList<>();
-			for(int j = 0;j < estTeamsPerPool;j++) {
-				currTeams.add(teams.get(teamsIterator+j));
+			while(teamsIterator < teams.size()) {
+				currTeams.add(teams.get(teamsIterator));
+				teamsIterator++;
 			}
-			poolMap.put(pool++, currTeams);
+			poolMap.put(pool, currTeams);
 		}
 		
 		for(int j = 1; j <= totalNumberOfPools && teamsIterator < teams.size();teamsIterator++,j++) {
-			poolMap.get(j).add(teams.get(teamsIterator));
-		}
+			poolMap.get(j).add(teams.get(teamsIterator));		}
 		
 		int matchNumber = 1;
 		for(int i = 1; i <= totalNumberOfPools;i++) {
