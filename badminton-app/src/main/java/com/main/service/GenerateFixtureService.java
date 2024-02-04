@@ -100,12 +100,13 @@ public class GenerateFixtureService {
 	
 	public void handleGenerateFixtureRequest(int eventId) {
 		Event event = eventRepository.findByEventId(eventId);
-		int numberOfTeams = teamsNEventsRepository.countByTeamsNEventIdEventId(event);
 		List<Teams> teams = teamsRepository.findByTeamsNEventIdEventId(eventId);
+		int numberOfTeams = teams.size();
 		if(event.getMatchType() == 2){
 			int qualifiersPerPool = event.getQualifiersPerPool();
 			int totalNumberOfPools = event.getTotalPools();
-			int totalRounds = 1 + (int) (Math.log (qualifiersPerPool * totalNumberOfPools)/Math.log(2)) ;
+			int totalRounds = 1 + ((int) (Math.log (qualifiersPerPool * totalNumberOfPools)/Math.log(2))) ;
+			System.out.println("{totalRounds = "+totalRounds+ "Number Of Pools="+ totalNumberOfPools );
 			event.setTotalRounds(totalRounds);
 			eventRepository.save(event);
 			generateRoundRobinEliminationFixture(event,totalNumberOfPools,teams,numberOfTeams);
@@ -135,13 +136,16 @@ public class GenerateFixtureService {
 
 	void generateRoundRobinEliminationFixture(Event event,int totalNumberOfPools, List<Teams> teams,int numberOfTeams){
 		int estTeamsPerPool = numberOfTeams/totalNumberOfPools;
+//		System.out.println(estTeamsPerPool);
 		Map<Integer,List<Teams>> poolMap = new HashMap<>();
 		int teamsIterator=0;
 		for(int pool = 1;pool <= totalNumberOfPools;pool++) {
 			List<Teams>currTeams = new ArrayList<>();
-			while(teamsIterator < teams.size()) {
+			int thisPoolTeams=0;
+			while(thisPoolTeams < estTeamsPerPool) {
 				currTeams.add(teams.get(teamsIterator));
 				teamsIterator++;
+				thisPoolTeams++;
 			}
 			poolMap.put(pool, currTeams);
 		}

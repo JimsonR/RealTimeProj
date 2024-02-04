@@ -15,6 +15,8 @@ public class CreateEventModel {
 	private int entryFee;
 	private int maxEntries;
 	private boolean allowBookings;
+	private int totalPools;
+	private int qualifiersPerPool;
 	public boolean getAllowBookings() {
 		return allowBookings;
 	}

@@ -31,6 +31,8 @@ public class EventService {
 					.tournamentId(tournament)
 					.matchType(event.getMatchType())
 					.entryFee(event.getEntryFee())
+					.qualifiersPerPool(event.getQualifiersPerPool())
+					.totalPools(event.getTotalPools())
 //					.allowBookings(event.getAllowBookings())
 					.build();
 			
