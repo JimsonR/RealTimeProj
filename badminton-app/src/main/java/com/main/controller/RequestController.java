@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +26,7 @@ import com.main.model.SignUpModel;
 import com.main.repository.TournamentRepository;
 import com.main.service.EventService;
 import com.main.service.GenerateFixtureService;
+import com.main.service.GenerateTeamsService;
 //import com.main.service.GenerateFixtureService;
 import com.main.service.OrganizationService;
 import com.main.service.PromoteWinnerService;
@@ -44,6 +46,7 @@ public class RequestController {
 	private final EventService eventService;
 	private final GenerateFixtureService generateFixtureService;
 	private final PromoteWinnerService promoteWinnerService;
+	private final GenerateTeamsService	generateTeamsService;
 	@GetMapping("/ab")
 	String index() {
 		System.out.println("hello");
@@ -140,6 +143,7 @@ public class RequestController {
 	TournamentRepository tournamentRepository;
 
 
+
 	@GetMapping("/showImage") // this is a temporary method 
 	ResponseEntity<byte[]> showImage() {
 		return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG)
@@ -153,6 +157,12 @@ public class RequestController {
 		return eventService.handleCreateEventRequest(createEventModel,Integer.valueOf(request.getHeader("tournamentId")));
 	}
 //	
+	@GetMapping("/generateTeams")
+	int generateTeams() {
+		return generateTeamsService.handleGenerateTeamsRequest(152);
+		
+	}
+	
 	@PostMapping("/generateFixtures")
 	int generateFixtureRequest(HttpServletRequest request) {
 		generateFixtureService.handleGenerateFixtureRequest(Integer.valueOf(request.getHeader("eventId")));

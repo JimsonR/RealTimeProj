@@ -22,7 +22,7 @@ import com.main.model.QueryResponse;
 import com.main.repository.ByesRepository;
 import com.main.repository.EventRepository;
 import com.main.repository.MatchesRepository;
-import com.main.repository.TeamsNEventsRepository;
+import com.main.repository.TeamsNEventRepository;
 import com.main.repository.TeamsRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class GenerateFixtureService {
 	
 
-	private final TeamsNEventsRepository teamsNEventsRepository;
+	private final TeamsNEventRepository teamsNEventRepository;
 	private final EventRepository eventRepository;
 	private final TeamsRepository teamsRepository;
 	private final MatchesRepository matchesRepository;

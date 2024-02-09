@@ -48,4 +48,5 @@ public class Matches {
 	private int totalSets;
 	private int totalPoints;
 	private String remarks;
+//	private String poolId;
 }

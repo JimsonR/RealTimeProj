@@ -24,6 +24,7 @@ public class TeamsNEvent {
 	@EmbeddedId
 	TeamsNEventId teamsNEventId;
 	
+	private int poolId;
 	
 	
 }

@@ -16,22 +16,22 @@ import com.main.model.EventMimic;
 import com.main.model.QueryResponse;
 
 @Repository
-public interface TeamsNEventsRepository extends JpaRepository<TeamsNEvent, TeamsNEventId>{
+public interface TeamsNEventRepository extends JpaRepository<TeamsNEvent, TeamsNEventId>{
 	int countByTeamsNEventIdEventId(Event event);
 
 	
 //	@Query(nativeQuery=true,value="select tms.* from teams tms join teamsnevent tmsnevnt on tms.team_id = tmsnevnt.team_id where tmsnevnt.event_id = ?1")
 //	<T> List<T> findByTeamsNEventIdEventId(int eventId);
-	 @Query(
-		        nativeQuery = true,
-		        value = "SELECT t.team_id AS TeamId "+
-		                "FROM teams t " +
-		                "JOIN teamsnevent te ON t.team_id = te.team_id " +
-		                "WHERE te.event_id = ?1"
-		    )
-	 List<Integer> findByTeamsNEventIdEventId(int eventId);
+//	 @Query(
+//		        nativeQuery = true,
+//		        value = "SELECT t.team_id AS TeamId "+
+//		                "FROM teams t " +
+//		                "JOIN teamsnevent te ON t.team_id = te.team_id " +
+//		                "WHERE te.event_id = ?1"
+//		    )
+//	 List<Integer> findByTeamsNEventIdEventId(int eventId);
 //		List<QueryResponse> findByTeamsNEventIdEventId(int eventId);
-
+List<TeamsNEvent>findByTeamsNEventIdEventId(Event event);
 //	@Query(nativeQuery=true,value="select tms.* from teams tms join teamsnevent tmsnevnt on tms.team_id = tmsnevnt.team_id where tmsnevnt.event_id = ?1")
 //	List<Teams> findByTeamsNEventIdEventId(int eventId);
 	
