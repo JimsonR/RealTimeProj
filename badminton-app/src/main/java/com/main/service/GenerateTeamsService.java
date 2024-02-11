@@ -44,18 +44,18 @@ public class GenerateTeamsService {
 				thisPoolTeams++;
 			}
 			poolMap.put(pool, currTeams);
-		}
+		 }
 		
 		for(int j = 1; j <= totalNumberOfPools && teamsIterator < teams.size();teamsIterator++,j++) {
 			poolMap.get(j).add(teams.get(teamsIterator));		
 		}
-		
+//		System.out.println(poolMap.get(1).get(1)+":map");
 		for(int i = 1; i <= totalNumberOfPools;i++) {
 			List<TeamsNEvent>thisPool = poolMap.get(i);
 			for(int j = 0;j < thisPool.size();j++) {
 					TeamsNEvent thisTeam = thisPool.get(j);
 					thisTeam.setPoolId(i);
-					teamsNEventRepository.save(thisTeam);
+					System.out.println("item:"+teamsNEventRepository.save(thisTeam));
 				}
 			}
 		}

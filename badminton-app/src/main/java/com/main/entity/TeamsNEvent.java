@@ -25,6 +25,6 @@ public class TeamsNEvent {
 	TeamsNEventId teamsNEventId;
 	
 	private int poolId;
-	
+	private int qualify;
 	
 }

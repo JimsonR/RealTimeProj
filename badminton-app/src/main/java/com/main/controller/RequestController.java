@@ -21,6 +21,7 @@ import com.main.model.ForgotPasswordModel;
 import com.main.model.LoginModel;
 import com.main.model.LoginResponseModel;
 import com.main.model.PasswordResetModel;
+import com.main.model.PromoteRRToEliminationModel;
 import com.main.model.PromoteWinnerModel;
 import com.main.model.SignUpModel;
 import com.main.repository.TournamentRepository;
@@ -29,6 +30,7 @@ import com.main.service.GenerateFixtureService;
 import com.main.service.GenerateTeamsService;
 //import com.main.service.GenerateFixtureService;
 import com.main.service.OrganizationService;
+import com.main.service.PromoteRRToEliminationService;
 import com.main.service.PromoteWinnerService;
 import com.main.service.ServiceImpl;
 import com.main.service.TournamentService;
@@ -47,6 +49,7 @@ public class RequestController {
 	private final GenerateFixtureService generateFixtureService;
 	private final PromoteWinnerService promoteWinnerService;
 	private final GenerateTeamsService	generateTeamsService;
+	private final PromoteRRToEliminationService promoteRRToEliminationService;
 	@GetMapping("/ab")
 	String index() {
 		System.out.println("hello");
@@ -141,6 +144,7 @@ public class RequestController {
 
 	@Autowired
 	TournamentRepository tournamentRepository;
+	
 
 
 
@@ -174,5 +178,9 @@ public class RequestController {
 		return promoteWinnerService.handlepromoteWinnerRequest(promoteWinnerModel);
 	}
 
-
+	@PostMapping("/promoteRRToElimination")
+	int promoteRRToElimination(@RequestBody PromoteRRToEliminationModel promoteRRToEliminationModel) {
+		promoteRRToEliminationService.handlePromoteRRToEliminationService(promoteRRToEliminationModel);
+		return 200;
+	}
 }

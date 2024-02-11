@@ -8,10 +8,16 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Embeddable
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TeamsNEventId implements Serializable{
 
 	/**

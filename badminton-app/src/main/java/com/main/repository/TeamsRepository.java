@@ -13,4 +13,6 @@ public interface TeamsRepository extends JpaRepository<Teams, Integer> {
 	@Query(nativeQuery = true,value="SELECT t.* FROM Teams t join TeamsNEvent tne on t.team_id = tne.team_id where tne.event_id = ?1")
 	List<Teams> findByTeamsNEventIdEventId(int i);
 
+	Teams findByTeamId(int teamId);
+
 }

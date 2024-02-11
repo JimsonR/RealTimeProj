@@ -34,6 +34,15 @@ public interface TeamsNEventRepository extends JpaRepository<TeamsNEvent, TeamsN
 List<TeamsNEvent>findByTeamsNEventIdEventId(Event event);
 //	@Query(nativeQuery=true,value="select tms.* from teams tms join teamsnevent tmsnevnt on tms.team_id = tmsnevnt.team_id where tmsnevnt.event_id = ?1")
 //	List<Teams> findByTeamsNEventIdEventId(int eventId);
+
+@Query(nativeQuery = true,value="select * from TeamsNEvent tne where event_id = ?1 ORDER BY tne.pool_id")
+List<TeamsNEvent> findteamsNEventSortByPoolId(int eventId);
+
+
+TeamsNEvent findByTeamsNEventId(TeamsNEventId teamsNEventIdd);
+
+@Query(nativeQuery = true,value="select tne.pool_id from TeamsNEvent tne where tne.event_id = ?1 AND tne.team_id = ?2")
+int getPoolIdByEventIdAndTeamId(int eventId, int teamId);
 	
 	
 }

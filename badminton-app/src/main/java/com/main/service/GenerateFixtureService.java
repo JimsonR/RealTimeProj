@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
 import com.main.entity.Byes;
 import com.main.entity.ByesId;
 import com.main.entity.Event;
@@ -98,7 +99,7 @@ public class GenerateFixtureService {
 	
 
 	
-	public void handleGenerateFixtureRequest(int eventId) {
+	public void handleGenerateFixtureRequest(int eventId) { // starts here
 		Event event = eventRepository.findByEventId(eventId);
 		List<Teams> teams = teamsRepository.findByTeamsNEventIdEventId(eventId);
 		int numberOfTeams = teams.size();
@@ -109,7 +110,10 @@ public class GenerateFixtureService {
 			System.out.println("{totalRounds = "+totalRounds+ "Number Of Pools="+ totalNumberOfPools );
 			event.setTotalRounds(totalRounds);
 			eventRepository.save(event);
-			generateRoundRobinEliminationFixture(event,totalNumberOfPools,teams,numberOfTeams);
+			
+			List<TeamsNEvent>teamsNEvent = teamsNEventRepository.findteamsNEventSortByPoolId(eventId);
+			generateRoundRobinEliminationFixture(teamsNEvent);
+//			generateRoundRobinEliminationFixture(event,totalNumberOfPools,teams,numberOfTeams);
 		}
 		else if(event.getMatchType() == 1) {
 			int totalRounds = findTotalRounds(numberOfTeams);
@@ -134,40 +138,73 @@ public class GenerateFixtureService {
 		
 	}
 
-	void generateRoundRobinEliminationFixture(Event event,int totalNumberOfPools, List<Teams> teams,int numberOfTeams){
-		int estTeamsPerPool = numberOfTeams/totalNumberOfPools;
-//		System.out.println(estTeamsPerPool);
-		Map<Integer,List<Teams>> poolMap = new HashMap<>();
-		int teamsIterator=0;
-		for(int pool = 1;pool <= totalNumberOfPools;pool++) {
-			List<Teams>currTeams = new ArrayList<>();
-			int thisPoolTeams=0;
-			while(thisPoolTeams < estTeamsPerPool) {
-				currTeams.add(teams.get(teamsIterator));
-				teamsIterator++;
-				thisPoolTeams++;
-			}
-			poolMap.put(pool, currTeams);
-		}
+	void generateRoundRobinEliminationFixture(List<TeamsNEvent>teamsNEvent){
+//		int estTeamsPerPool = numberOfTeams/totalNumberOfPools;
+////		System.out.println(estTeamsPerPool);
+//		Map<Integer,List<Teams>> poolMap = new HashMap<>();
+//		int teamsIterator=0;
+//		for(int pool = 1;pool <= totalNumberOfPools;pool++) {
+//			List<Teams>currTeams = new ArrayList<>();
+//			int thisPoolTeams=0;
+//			while(thisPoolTeams < estTeamsPerPool) {
+//				currTeams.add(teams.get(teamsIterator));
+//				teamsIterator++;
+//				thisPoolTeams++;
+//			}
+//			poolMap.put(pool, currTeams);
+//		}
+//		
+//		for(int j = 1; j <= totalNumberOfPools && teamsIterator < teams.size();teamsIterator++,j++) {
+//			poolMap.get(j).add(teams.get(teamsIterator));		}
+//		
+//		int matchNumber = 1;
+//		for(int i = 1; i <= totalNumberOfPools;i++) {
+//			List<Teams>thisPool = poolMap.get(i);
+//			for(int j = 0;j < thisPool.size();j++) {
+//				for(int k = j+1;k < thisPool.size();k++) {
+//					Matches match = Matches.builder()
+//							.team1Id(thisPool.get(j))
+//							.team2Id(thisPool.get(k))
+//							.eventId(event)
+//							.matchNumber(matchNumber++)
+//							.round(1)
+//							.build();
+//							
+//					matchesRepository.save(match);
+//				}
+//			}
+//		}
+		int maxPool = teamsNEvent.get(teamsNEvent.size()-1).getPoolId();
+		int left=0,right=0;
 		
-		for(int j = 1; j <= totalNumberOfPools && teamsIterator < teams.size();teamsIterator++,j++) {
-			poolMap.get(j).add(teams.get(teamsIterator));		}
-		
-		int matchNumber = 1;
-		for(int i = 1; i <= totalNumberOfPools;i++) {
-			List<Teams>thisPool = poolMap.get(i);
-			for(int j = 0;j < thisPool.size();j++) {
-				for(int k = j+1;k < thisPool.size();k++) {
-					Matches match = Matches.builder()
-							.team1Id(thisPool.get(j))
-							.team2Id(thisPool.get(k))
-							.eventId(event)
-							.matchNumber(matchNumber++)
-							.round(1)
-							.build();
-							
-					matchesRepository.save(match);
+			while(right < teamsNEvent.size()) {
+				if( teamsNEvent.get(right).getPoolId() == teamsNEvent.get(left).getPoolId()) {
+					
+					right++;
 				}
+				else {
+					generateMatchesForPool(left,right,teamsNEvent);
+					left=right;
+				}
+			}
+			generateMatchesForPool(left, right, teamsNEvent);
+			
+	
+	}
+	
+	void generateMatchesForPool(int left, int right, List<TeamsNEvent> teamsNEvent){
+		int matchNumber=1;
+		for(int i = left;i < right;i++) {
+			for(int j = i+1;j < right;j++) {
+				Matches match = Matches.builder()
+						.team1Id(teamsNEvent.get(i).getTeamsNEventId().getTeam_id())
+						.team2Id(teamsNEvent.get(j).getTeamsNEventId().getTeam_id())
+						.eventId(teamsNEvent.get(i).getTeamsNEventId().getEventId())
+						.matchNumber(matchNumber++)
+						.round(1)
+						.build();
+						
+				matchesRepository.save(match);
 			}
 		}
 		
