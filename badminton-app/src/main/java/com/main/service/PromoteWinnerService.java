@@ -32,13 +32,14 @@ public class PromoteWinnerService {
 		
 		match.setWinnerId(winner);
 		matchesRepository.save(match);
-//		if(match.getRound() == 1) {
-//			Event event = eventRepository.findByEventId(match.getEventId().getEventId());
-//			if(event.getMatchType()==2) {
-//				promoteRoundRobinToElimination(promoteWinnerModel,match,event,winner);
-//			}
+		if(match.getRound() == 1) {
+			Event event = eventRepository.findByEventId(match.getEventId().getEventId());
+			if(event.getMatchType()==2) {
+				return 123;
+//				promoteRoundRobinRound1(promoteWinnerModel,match,event,winner);
+			}
 //			return 123;
-//		}
+		}
 		int nextMatchNumber = getnextMatchNumber(match.getMatchNumber());
 		System.out.println(nextMatchNumber);
 		boolean matchExists = matchesRepository.existsByMatchNumberAndRoundAndEventId(nextMatchNumber,match.getRound()+1,match.getEventId());
