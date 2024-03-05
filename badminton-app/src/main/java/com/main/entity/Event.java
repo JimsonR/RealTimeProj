@@ -26,6 +26,7 @@ public class Event {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "tournamentId", referencedColumnName = "tournamentId")
 	Tournament tournamentId;
+	private String EventName;
 	private int category;
 	private int matchType;
 	private int entryFee;

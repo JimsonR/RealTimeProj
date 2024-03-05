@@ -1,13 +1,20 @@
 package com.main.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.main.entity.Event;
+import com.main.model.GetEventsForTournamentProjection;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event, Integer>{
 
 	Event findByEventId(int eventId);
+
+	@Query(nativeQuery = true,value="select e.event_name as EventNames from event e where e.tournament_id = ?1")
+	List<GetEventsForTournamentProjection> getEventsByTournamentId(int tournamentId);
 	
 }

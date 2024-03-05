@@ -1,10 +1,19 @@
-package com.main.model;
+package com.main.model; 
+
+import java.util.Date;
 
 import com.main.entity.Teams;
 import com.main.entity.TeamsNEventId;
 
 public interface QueryResponse {
-	int getTeamId();
+	String getTournamentName();
+	byte[] getPoster();
+	String getTournamentId();
+	Date getStartDate();
+	Date getEndDate();
+	String getAddress();
+
+//	int getTeamId();
 //	int getEventId();
 //	EventMimic getTeamsId();
 //	TeamsNEventId getTeamsNEventId();

@@ -5,10 +5,12 @@ import java.util.Date;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +26,7 @@ public class Tournament {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int tournamentId;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(referencedColumnName = "organizationId")
 	private Organization organizationId;
 	private String tournamentName;
@@ -35,6 +37,10 @@ public class Tournament {
 	private String address;
 	private String description;
 	private String sponsors;
+	@Lob
+	@Column(length=100000)
 	private byte[] poster;
+	@Lob
+	@Column(length=100000)
 	private byte[] sponsorPoster;
 }

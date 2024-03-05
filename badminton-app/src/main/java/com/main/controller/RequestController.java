@@ -14,25 +14,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.main.entity.Tournament;
 import com.main.model.CreateEventModel;
 import com.main.model.CreateOrganizationModel;
 import com.main.model.CreateTournamentModel;
 import com.main.model.ForgotPasswordModel;
+import com.main.model.GetEventsForTournamentProjection;
 import com.main.model.LoginModel;
 import com.main.model.LoginResponseModel;
 import com.main.model.PasswordResetModel;
 import com.main.model.PromoteRRToEliminationModel;
 import com.main.model.PromoteWinnerModel;
+import com.main.model.QueryResponse;
+import com.main.model.ShowTournamentsModel;
 import com.main.model.SignUpModel;
 import com.main.repository.TournamentRepository;
 import com.main.service.EventService;
 import com.main.service.GenerateFixtureService;
 import com.main.service.GenerateTeamsService;
+import com.main.service.GetEventsForTournamentService;
 //import com.main.service.GenerateFixtureService;
 import com.main.service.OrganizationService;
 import com.main.service.PromoteRRToEliminationService;
 import com.main.service.PromoteWinnerService;
 import com.main.service.ServiceImpl;
+import com.main.service.ShowTournamentsService;
 import com.main.service.TournamentService;
 
 import jakarta.servlet.http.HttpServlet;
@@ -50,6 +56,9 @@ public class RequestController {
 	private final PromoteWinnerService promoteWinnerService;
 	private final GenerateTeamsService	generateTeamsService;
 	private final PromoteRRToEliminationService promoteRRToEliminationService;
+	private final ShowTournamentsService showTournamentService;
+	private final GetEventsForTournamentService getEventsForTournamentService;
+	TournamentRepository tournamentRepository;
 	@GetMapping("/ab")
 	String index() {
 		System.out.println("hello");
@@ -136,16 +145,28 @@ public class RequestController {
 		return organizationService.handleCreateOrginizationRequest(createOrganizationModel, request);
 	}
 
+	@GetMapping("/showTournaments")
+	public List<Tournament>showTournamentsRequest(){
+		List<Tournament>ret = showTournamentService.handleShowTournamentsRequest();
+		System.out.println(ret.get(1));
+		return ret;
+	}
+	@GetMapping("/showTournament")
+	public List<QueryResponse> showTournamentRequest(){
+		return showTournamentService.handleShowTournamentRequest();
+	}
+	
 	@PostMapping(path = "/createTournament")
 	int createTournamentRequest(@ModelAttribute CreateTournamentModel createTournamentModel, HttpServletRequest request)
 			throws IOException {
 		return tournamentService.handleCreateOrginizationRequest(createTournamentModel, request);
 	}
 
-	@Autowired
-	TournamentRepository tournamentRepository;
 	
-
+	@GetMapping("/getEventsForTournament")
+	public List<GetEventsForTournamentProjection> getEventsForTournament(@RequestParam("tournamentId")int tournamentId){
+		return getEventsForTournamentService.getEvents(tournamentId);
+	}
 
 
 	@GetMapping("/showImage") // this is a temporary method 
