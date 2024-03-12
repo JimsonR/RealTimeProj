@@ -63,7 +63,7 @@ public class RequestController {
 	String index() {
 		System.out.println("hello");
 		return "hello";
-	}
+	} 
 
 	@PostMapping("/signup")
 	int signUpRequest(@RequestBody SignUpModel signUpModel, HttpServletRequest request) {
@@ -204,4 +204,6 @@ public class RequestController {
 		promoteRRToEliminationService.handlePromoteRRToEliminationService(promoteRRToEliminationModel);
 		return 200;
 	}
+	
+	
 }

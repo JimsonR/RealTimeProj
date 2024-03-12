@@ -24,7 +24,7 @@ public class SecurityConfiguration {
 //		}
 
 	private static String[] WHITE_LIST = { "/signup", "/login", "/verificationLink**", "/forgotPassword",
-			"/resetPassword","/**" };
+			"/resetPassword","/admin/login" };
 	private final AuthenticationProvider authenticationProvider;
 	private final SecurityFilter securityFilter;
 
@@ -34,7 +34,9 @@ public class SecurityConfiguration {
 ////			.csrf()
 //			.disable()
 				.cors(AbstractHttpConfigurer::disable)
-				.authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST).permitAll().anyRequest().authenticated())
+				.authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST).permitAll()
+						.requestMatchers("/admin/**").hasRole("ADMIN")
+						.anyRequest().authenticated())
 //			.and()
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 //			.sessionManagement()

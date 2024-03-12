@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
@@ -29,16 +30,18 @@ public class Users implements UserDetails{
 	private String userName;
 	private String emailId; 
 	private String password;
+	private String role;
 	private String jwtToken;
 	private boolean isJwtTokenValid;
 	private boolean isVerified;
 	private String verificationToken;
 	private String resetPasswordToken;
 	private Long resetPasswordotp;
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return Collections.emptyList();
+		return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role));
 	}
 	@Override
 	public String getUsername() {
