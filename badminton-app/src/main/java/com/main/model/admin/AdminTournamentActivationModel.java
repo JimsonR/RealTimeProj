@@ -1,14 +1,20 @@
 package com.main.model.admin;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class AdminTournamentActivationModel {
-	int feature_id;
-	int tournament_id;
-	boolean value;
+	private int featureId;
+	private int tournamentId;
+	
+	public boolean getValue() {
+		return true;
+	}
+	
 }

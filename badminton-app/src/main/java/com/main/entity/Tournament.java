@@ -37,6 +37,12 @@ public class Tournament {
 	private String address;
 	private String description;
 	private String sponsors;
+	
+	private boolean isPublic;
+	private boolean isLive;
+	private boolean isPro;
+	private boolean isActive;
+	
 	@Lob
 	@Column(length=100000)
 	private byte[] poster;

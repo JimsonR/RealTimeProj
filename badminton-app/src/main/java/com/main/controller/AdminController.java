@@ -7,10 +7,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.main.model.admin.AdminTournamentActivationModel;
+import com.main.service.admin.ActivateTournamentService;
 
+import lombok.RequiredArgsConstructor;
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
+	
+	private final ActivateTournamentService activateTournamentService;
+	
 	@GetMapping("/ab")
 	String index() {
 		System.out.println("hello");
@@ -18,9 +24,9 @@ public class AdminController {
 	} 
 	
 	@PostMapping("/activateTournament")
-	int activateTournament(AdminTournamentActivationModel activationModel) {
+	String activateTournament(AdminTournamentActivationModel activationModel) {
+		return activateTournamentService.handleActivateTournamentRequest(activationModel);
 		
-		return 1;
 	}
 	
 }

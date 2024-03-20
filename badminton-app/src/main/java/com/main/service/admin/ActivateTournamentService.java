@@ -3,6 +3,7 @@ package com.main.service.admin;
 import org.springframework.stereotype.Service;
 
 import com.main.model.admin.AdminTournamentActivationModel;
+import com.main.repository.admin.AdminTournamentRepository;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +12,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Data
 public class ActivateTournamentService {
-	public int handleActivateTournamentRequest(AdminTournamentActivationModel adminTournamentActivationModel) {
-		if(adminTournamentActivationModel.getFeature_id()==1) {
-			
+	private final AdminTournamentRepository adminTournamentRepository;
+	public String handleActivateTournamentRequest(AdminTournamentActivationModel adminTournamentActivationModel) {
+		if(adminTournamentActivationModel.getFeatureId()==1) {
+			return adminTournamentRepository.changeBooleanValue(adminTournamentActivationModel.getValue(),adminTournamentActivationModel.getTournamentId());
 		}
-		return 0;
+		else
+		return "not done: "+adminTournamentActivationModel.getFeatureId();
 	}
 }
