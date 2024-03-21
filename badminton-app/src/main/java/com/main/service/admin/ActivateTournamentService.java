@@ -15,7 +15,9 @@ public class ActivateTournamentService {
 	private final AdminTournamentRepository adminTournamentRepository;
 	public String handleActivateTournamentRequest(AdminTournamentActivationModel adminTournamentActivationModel) {
 		if(adminTournamentActivationModel.getFeatureId()==1) {
-			return adminTournamentRepository.changeBooleanValue(adminTournamentActivationModel.getValue(),adminTournamentActivationModel.getTournamentId());
+			System.out.println("called");
+			 adminTournamentRepository.changeBooleanValue(adminTournamentActivationModel.getValue(),adminTournamentActivationModel.getTournamentId());
+			 return "done";
 		}
 		else
 		return "not done: "+adminTournamentActivationModel.getFeatureId();
