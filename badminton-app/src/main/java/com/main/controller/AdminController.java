@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.main.model.admin.AdminTournamentActivationModel;
 import com.main.repository.admin.AdminTournamentRepository;
+import com.main.service.admin.ActivateOrganizationService;
 import com.main.service.admin.ActivateTournamentService;
 
 import com.main.repository.admin.*;
@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/admin")
 public class AdminController {
 	
+	private final ActivateOrganizationService activateOrganizationService;
 	private final ActivateTournamentService activateTournamentService;
 	
 	@GetMapping("/ab")
@@ -31,14 +32,26 @@ public class AdminController {
 	} 
 	
 	@PostMapping("/activateTournament")
-	String activateTournament(@RequestBody AdminTournamentActivationModel activationModel) {
+	int activateTournament(@RequestBody AdminTournamentActivationModel activationModel) {
 		return activateTournamentService.handleActivateTournamentRequest(activationModel);
 		
 	}
 	private final AdminTournamentRepository adminTournamentRepository;
-	@GetMapping("/get")
+	@GetMapping("/getTournaments")
 	List<AdminTournamentProjection>getAdminTournamentDetails(){
 		return adminTournamentRepository.getAdminTournament();
+	}
+	
+	
+	@PostMapping("/activateOrganization")
+	int activateOrganization(@RequestBody AdminOrganizationActivationModel activationModel) {
+		return activateOrganizationService.handleActivateOrganizationRequest(activationModel);
+		
+	}
+	private final AdminOrganizationRepository adminOrganizationRepository;
+	@GetMapping("/getOrganizations")
+	List<AdminOrganizationProjection>getAdminOrganizationDetails(){
+		return adminOrganizationRepository.getAdminOrganization();
 	}
 	
 }

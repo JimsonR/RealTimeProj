@@ -5,13 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class AdminTournamentActivationModel {
+public class AdminOrganizationActivationModel {
 	private int featureId;
-	private int tournamentId;
+	private int organizationId;
 	private boolean value;
 	
 	public boolean getValue() {

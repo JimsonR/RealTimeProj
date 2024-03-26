@@ -13,13 +13,28 @@ import lombok.RequiredArgsConstructor;
 @Data
 public class ActivateTournamentService {
 	private final AdminTournamentRepository adminTournamentRepository;
-	public String handleActivateTournamentRequest(AdminTournamentActivationModel adminTournamentActivationModel) {
+	public int handleActivateTournamentRequest(AdminTournamentActivationModel adminTournamentActivationModel) {
 		if(adminTournamentActivationModel.getFeatureId()==1) {
-			System.out.println("called");
-			 adminTournamentRepository.changeBooleanValue(adminTournamentActivationModel.getValue(),adminTournamentActivationModel.getTournamentId());
-			 return "done";
+			System.out.println("val="+adminTournamentActivationModel.getValue());
+			 adminTournamentRepository.changeIsActive(adminTournamentActivationModel.getValue(),adminTournamentActivationModel.getTournamentId());
+			 return 1;
+		}
+		else if(adminTournamentActivationModel.getFeatureId()==2) {
+			System.out.println("val="+adminTournamentActivationModel.getValue());
+			 adminTournamentRepository.changeIsPublic(adminTournamentActivationModel.getValue(),adminTournamentActivationModel.getTournamentId());
+			 return 1;
+		}
+		else if(adminTournamentActivationModel.getFeatureId()==3) {
+			System.out.println("val="+adminTournamentActivationModel.getValue());
+			 adminTournamentRepository.changeIsLive(adminTournamentActivationModel.getValue(),adminTournamentActivationModel.getTournamentId());
+			 return 1;
+		}
+		else if(adminTournamentActivationModel.getFeatureId()==4) {
+			System.out.println("val="+adminTournamentActivationModel.getValue());
+			 adminTournamentRepository.changeIsPro(adminTournamentActivationModel.getValue(),adminTournamentActivationModel.getTournamentId());
+			 return 1;
 		}
 		else
-		return "not done: "+adminTournamentActivationModel.getFeatureId();
+		return 2;
 	}
 }

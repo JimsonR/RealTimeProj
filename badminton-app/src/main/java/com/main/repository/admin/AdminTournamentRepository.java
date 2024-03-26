@@ -17,11 +17,30 @@ public interface AdminTournamentRepository extends JpaRepository<Tournament, Int
 	@Transactional
     @Modifying
 	@Query(nativeQuery = true,value="update tournament set is_active = ?1 where tournament_id = ?2")
-	void changeBooleanValue(boolean newValue,int tournament_id);
+	void changeIsActive(boolean newValue,int tournament_id);
+	
+	@Transactional
+    @Modifying
+	@Query(nativeQuery = true,value="update tournament set is_public = ?1 where tournament_id = ?2")
+	void changeIsPublic(boolean newValue,int tournament_id);
+	
+	@Transactional
+    @Modifying
+	@Query(nativeQuery = true,value="update tournament set is_live = ?1 where tournament_id = ?2")
+	void changeIsLive(boolean newValue,int tournament_id);
+	
+	
+	@Transactional
+    @Modifying
+	@Query(nativeQuery = true,value="update tournament set is_pro = ?1 where tournament_id = ?2")
+	void changeIsPro(boolean newValue,int tournament_id);
+	
+	
 	
 	@Query(nativeQuery = true,value=
 			"select t.tournament_id AS TournamentId, "
-			+ "t.organization_id_organization_id AS OrganisationId,"
+			+ "t.organization_id_organization_id AS OrganisationId, "
+			+ "o.organization_name AS OrganisationName, "
 			+ "t.tournament_name AS TournamentName,"
 			+ "t.start_date AS StartDate,"
 			+ "t.end_date AS EndDate,"
@@ -29,6 +48,8 @@ public interface AdminTournamentRepository extends JpaRepository<Tournament, Int
 			+ " t.is_active as IsActive,"
 			+ "t.is_pro as IsPro,"
 			+ "t.is_live as IsLive,"
-			+ "t.is_public as IsPublic from tournament t")
-	List<AdminTournamentProjection>getAdminTournament();
+			+ "t.is_public as IsPublic "
+			+ "from tournament t join organization o on "
+			+ "t.organization_id_organization_id = o.organization_id where t.end_date <= NOW()")
+	List<AdminTournamentProjection>getAdminTournament();  
 }

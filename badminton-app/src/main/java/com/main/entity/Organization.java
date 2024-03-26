@@ -30,4 +30,5 @@ public class Organization {
 	private String organizationName;
 	private String emailId;
 	private String mobileNumber;
+	private boolean isActive;
 }
