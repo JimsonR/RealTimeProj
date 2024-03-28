@@ -24,6 +24,7 @@ public class AdminController {
 	
 	private final ActivateOrganizationService activateOrganizationService;
 	private final ActivateTournamentService activateTournamentService;
+	private final AdminRevenueRepository adminRevenueRepository;
 	
 	@GetMapping("/ab")
 	String index() {
@@ -53,5 +54,8 @@ public class AdminController {
 	List<AdminOrganizationProjection>getAdminOrganizationDetails(){
 		return adminOrganizationRepository.getAdminOrganization();
 	}
-	
+	@GetMapping("/getRevenue")
+	List<AdminRevenueProjection>getAdminRevenueDetails(){
+		return adminRevenueRepository.getRevenue();
+	}
 }
