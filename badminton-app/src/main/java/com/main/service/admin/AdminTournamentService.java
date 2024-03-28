@@ -1,5 +1,6 @@
 package com.main.service.admin;
 
+import com.main.model.admin.AdminTournamentProjection;
 import org.springframework.stereotype.Service;
 
 import com.main.model.admin.AdminTournamentActivationModel;
@@ -8,10 +9,12 @@ import com.main.repository.admin.AdminTournamentRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Data
-public class ActivateTournamentService {
+public class AdminTournamentService {
 	private final AdminTournamentRepository adminTournamentRepository;
 	public int handleActivateTournamentRequest(AdminTournamentActivationModel adminTournamentActivationModel) {
 		if(adminTournamentActivationModel.getFeatureId()==1) {
@@ -36,5 +39,10 @@ public class ActivateTournamentService {
 		}
 		else
 		return 2;
+	}
+
+
+	public List<AdminTournamentProjection> handleGetAdminTournamentDetailsRequest(){
+		return adminTournamentRepository.getAdminTournament();
 	}
 }
