@@ -13,7 +13,7 @@ public interface AdminRevenueRepository extends JpaRepository<Payments,Integer> 
     @Query(nativeQuery = true,value = "select " +
             "p.payment_id as PaymentId," +
             "p.team_id as TeamId," +
-            "te.event_id as EventId," +
+            "p.event_id as EventId," +
             "e.event_name as EventName," +
             "e.tournament_id as TournamentId," +
             "tr.tournament_name as TournamentName," +
@@ -22,9 +22,9 @@ public interface AdminRevenueRepository extends JpaRepository<Payments,Integer> 
             " p.amount as Amount," +
             "p.payment_mode as PaymentMode," +
             "p.payment_status as PaymentStatus" +
-            " from payments p join teamsnevent te on p.team_id = te.team_id" +
-            " join event e on e.event_id = te.event_id " +
-            "join tournament tr on e.tournament_id = tr.tournament_id")
+            " from payments p join teamsnevent te on p.team_id = te.team_id and p.event_id = te.event_id" +
+            " join event e on e.event_id = p.event_id " +
+            "join tournament tr on e.tournament_id = tr.tournament_id where tr.start_date < Now()")
     List<AdminRevenueProjection>getRevenue();
 
 }

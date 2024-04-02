@@ -12,8 +12,12 @@ public class Payments {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "teamId", referencedColumnName = "teamId")
     Teams teamId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="eventId",referencedColumnName = "eventId")
+    Event eventId;
+    
     String uniqueId;
-
+    
     Date date;
     int amount;
     boolean paymentMode;

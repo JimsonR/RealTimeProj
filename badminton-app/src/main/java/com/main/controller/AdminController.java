@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.main.service.admin.AdminOrganizationService;
 import com.main.service.admin.AdminTournamentService;
 
-import com.main.repository.admin.*;
+//import com.main.repository.admin.*;
 import com.main.model.admin.*;
 
 import lombok.RequiredArgsConstructor;
@@ -58,6 +58,7 @@ public class AdminController {
 	List<AdminRevenueProjection>getAdminRevenueDetails(){
 		return adminRevenueService.handleGetRevenueRequest();
 	}
+//	@PostMapping("")
 //	@GetMapping("/createTournament")
 
 }
