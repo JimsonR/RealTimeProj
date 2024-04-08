@@ -34,4 +34,8 @@ public class ShowTournamentsService {
 			return tournaments;
 		else return null;
 	}
+
+	public List<GetTournamentProjection> handleGetTournamentRequest(int tournamentId) {
+		return tournamentRepository.getTournament( tournamentId);
+	}
 }

@@ -3,6 +3,7 @@ package com.main.controller;
 import java.io.IOException;
 import java.util.List;
 
+import com.main.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,19 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.main.entity.Tournament;
-import com.main.model.CreateEventModel;
-import com.main.model.CreateOrganizationModel;
-import com.main.model.CreateTournamentModel;
-import com.main.model.ForgotPasswordModel;
-import com.main.model.GetEventsForTournamentProjection;
-import com.main.model.LoginModel;
-import com.main.model.LoginResponseModel;
-import com.main.model.PasswordResetModel;
-import com.main.model.PromoteRRToEliminationModel;
-import com.main.model.PromoteWinnerModel;
-import com.main.model.QueryResponse;
-import com.main.model.ShowTournamentsModel;
-import com.main.model.SignUpModel;
 import com.main.repository.TournamentRepository;
 import com.main.service.EventService;
 import com.main.service.GenerateFixtureService;
@@ -148,21 +136,30 @@ public class RequestController {
 	@GetMapping("/showTournaments")
 	public List<Tournament>showTournamentsRequest(){
 		List<Tournament>ret = showTournamentService.handleShowTournamentsRequest();
-		System.out.println(ret.get(1));
+//		System.out.println(ret.get(1));
 		return ret;
 	}
 	@GetMapping("/showTournament")
 	public List<QueryResponse> showTournamentRequest(){
 		return showTournamentService.handleShowTournamentRequest();
 	}
-	
+
+	@GetMapping("/getTournament")
+	public List<GetTournamentProjection>getTournamentRequest(@RequestParam("tournamentId") int tournamentId){
+		System.out.println("method called");
+		return showTournamentService.handleGetTournamentRequest(tournamentId);
+	}
+
 	@PostMapping(path = "/createTournament")
-	int createTournamentRequest(@ModelAttribute CreateTournamentModel createTournamentModel, HttpServletRequest request)
+	int createTournamentRequest(@RequestBody CreateTournamentModel createTournamentModel, HttpServletRequest request)
 			throws IOException {
 		return tournamentService.handleCreateOrginizationRequest(createTournamentModel, request);
 	}
 
-	
+	@PostMapping(path = "/editTournament")
+	int editTournament(@ModelAttribute EditTournamentDTO editTournamentDTO){
+		return tournamentService.handleEditTournamentRequest(editTournamentDTO);
+	}
 	@GetMapping("/getEventsForTournament")
 	public List<GetEventsForTournamentProjection> getEventsForTournament(@RequestParam("tournamentId")int tournamentId){
 		return getEventsForTournamentService.getEvents(tournamentId);
@@ -204,6 +201,8 @@ public class RequestController {
 		promoteRRToEliminationService.handlePromoteRRToEliminationService(promoteRRToEliminationModel);
 		return 200;
 	}
+
+
 	
 	
 }

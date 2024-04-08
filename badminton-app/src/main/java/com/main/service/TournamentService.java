@@ -3,6 +3,8 @@ package com.main.service;
 
 import java.io.IOException;
 
+import com.main.model.EditTournamentDTO;
+import com.main.model.EditTournamentModel;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
@@ -44,5 +46,42 @@ public class TournamentService {
 //		System.out.println(Base64.decodeBase64(createTournamentModel.getPoster()));
 		return 100;
 	}
-	
+
+    public int handleEditTournamentRequest(EditTournamentDTO editTournamentDTO) {
+
+		EditTournamentModel previous = editTournamentDTO.getEditTournamentModel();
+    	CreateTournamentModel current = editTournamentDTO.getCreateTournamentModel();
+		try {
+			if (!previous.getTournamentName().equals(current.getTournamentName())) {
+				tournamentRepository.updateTournamentName(current.getTournamentName(),previous.getTournamentId());
+			}
+			if (!previous.getLocation().equals(current.getLocation())) {
+				tournamentRepository.updateLocation(current.getLocation(),previous.getTournamentId());
+			}
+			if (!previous.getAddress().equals(current.getAddress())) {
+				tournamentRepository.updateAddress(current.getAddress(),previous.getTournamentId());
+			}
+			if (!previous.getDescription().equals(current.getDescription())) {
+				tournamentRepository.updateDescription(current.getDescription(),previous.getTournamentId());
+			}
+			if (!previous.getSponsors().equals(current.getSponsors())) {
+				tournamentRepository.updateSponsors(current.getSponsors(),previous.getTournamentId());
+			}
+			if (!previous.getStartDate().equals(current.getStartDate())) {
+				tournamentRepository.updateStartDate(current.getStartDate(),previous.getTournamentId());
+			}
+			if (!previous.getEndDate().equals(current.getEndDate())) {
+				tournamentRepository.updateEndDate(current.getEndDate(),previous.getTournamentId());
+			}
+			if (!previous.getBookingsCloseTime().equals(current.getBookingsCloseTime())) {
+				tournamentRepository.updateBookingsCloseTime(current.getBookingsCloseTime(),previous.getTournamentId());
+			}
+			tournamentRepository.updateFiles(current.getPoster(), current.getSponsorPoster(),previous.getTournamentId());
+			return 1;
+		}
+		catch(Exception e){
+			System.out.println("exception "+e);
+			return 0;
+		}
+    }
 }
