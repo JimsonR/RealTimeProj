@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 public class GetEventsForTournamentService {
 	private final EventRepository eventRepository;
-	public List<GetEventsForTournamentProjection> getEvents(int tournamentId) {
+	public List<String> getEvents(int tournamentId) {
 		return eventRepository.getEventsByTournamentId(tournamentId);
 	}
 }

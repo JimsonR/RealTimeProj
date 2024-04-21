@@ -13,6 +13,6 @@ public interface GetTournamentProjection {
      String getAddress();
      String getDescription();
      String getSponsors();
-     MultipartFile getPoster();
-     MultipartFile getSponsorPoster();
+     byte[] getPoster();
+     byte[] getSponsorPoster();
 }

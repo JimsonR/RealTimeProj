@@ -31,6 +31,7 @@ public class Event {
 	private int matchType;
 	private int entryFee;
 	private int maxEntries;
+	private int discount;
 //	private boolean allowBookings=true;
 	
 	//will fill during fixture generation

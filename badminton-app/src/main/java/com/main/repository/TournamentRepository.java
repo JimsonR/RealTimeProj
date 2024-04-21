@@ -39,12 +39,12 @@ public interface TournamentRepository extends JpaRepository<Tournament, Integer>
 			", t.bookings_close_time AS BookingsCloseTime" +
 			",t.description AS Description" +
 			", t.sponsors AS Sponsors"+
-			", t.address AS Address from tournament t where tournament_id = ?1")
-	List<GetTournamentProjection> getTournament(int tournamentId);
+			" from tournament t where tournament_id = ?1")
+	GetTournamentProjection getTournament(int tournamentId);
 
 	@Transactional
 	@Modifying
-	@Query(nativeQuery = true,value = "update table tournament set tournament_name=?1")
+	@Query(nativeQuery = true,value = "update tournament set tournament_name=?1 where tournament_id = ?2")
 	void updateTournamentName(String tournamentName, int tournamentId);
 
 	@Transactional

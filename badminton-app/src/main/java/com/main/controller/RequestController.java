@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.main.entity.Event;
 import com.main.entity.Tournament;
 import com.main.repository.TournamentRepository;
 import com.main.service.EventService;
+import com.main.service.EventsService;
 import com.main.service.GenerateFixtureService;
 import com.main.service.GenerateTeamsService;
 import com.main.service.GetEventsForTournamentService;
@@ -47,6 +50,7 @@ public class RequestController {
 	private final ShowTournamentsService showTournamentService;
 	private final GetEventsForTournamentService getEventsForTournamentService;
 	TournamentRepository tournamentRepository;
+	private final EventsService eventsService;
 	@GetMapping("/ab")
 	String index() {
 		System.out.println("hello");
@@ -145,7 +149,7 @@ public class RequestController {
 	}
 
 	@GetMapping("/getTournament")
-	public List<GetTournamentProjection>getTournamentRequest(@RequestParam("tournamentId") int tournamentId){
+	public GetTournamentProjection getTournamentRequest(@RequestParam("tournamentId") int tournamentId){
 		System.out.println("method called");
 		return showTournamentService.handleGetTournamentRequest(tournamentId);
 	}
@@ -157,12 +161,16 @@ public class RequestController {
 	}
 
 	@PostMapping(path = "/editTournament")
-	int editTournament(@ModelAttribute EditTournamentDTO editTournamentDTO){
+	int editTournament(@RequestBody EditTournamentDTO editTournamentDTO){
 		return tournamentService.handleEditTournamentRequest(editTournamentDTO);
 	}
 	@GetMapping("/getEventsForTournament")
-	public List<GetEventsForTournamentProjection> getEventsForTournament(@RequestParam("tournamentId")int tournamentId){
+	public List<String> getEventsForTournament(@RequestParam("tournamentId")int tournamentId){
 		return getEventsForTournamentService.getEvents(tournamentId);
+	}
+	@GetMapping("/getEventsForEditTournament")
+	public List<GetEventsForEditTournamentProjection> getEventsForEditTournament(@RequestParam("tournamentId")int tournamentId) {
+		return eventsService.handleGetEvents(tournamentId);
 	}
 
 

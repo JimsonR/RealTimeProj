@@ -17,7 +17,7 @@ public class EditTournamentModel {
     private String address;
     private String description;
     private String sponsors;
-    private MultipartFile poster;
-    private MultipartFile sponsorPoster;
+//    private MultipartFile poster;
+//    private MultipartFile sponsorPoster;
 }
 

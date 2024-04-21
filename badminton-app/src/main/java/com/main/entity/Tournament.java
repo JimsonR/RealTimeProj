@@ -26,7 +26,7 @@ public class Tournament {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int tournamentId;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(referencedColumnName = "organizationId")
 	private Organization organizationId;
 	private String tournamentName;
