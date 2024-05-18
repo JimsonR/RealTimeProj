@@ -1,14 +1,12 @@
 package com.main.model;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Date;
+import java.time.LocalDate;
 
 public interface GetTournamentProjection {
      String getTournamentName();
-     Date getStartDate();
-     Date getEndDate();
-     Date getBookingsCloseTime();
+     LocalDate getStartDate();
+     LocalDate getEndDate();
+     LocalDate getBookingsCloseTime();
      String getLocation();
      String getAddress();
      String getDescription();

@@ -1,5 +1,6 @@
 package com.main.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -15,9 +16,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateTournamentModel {
 	private String tournamentName;
-	private Date startDate;
-	private Date endDate;
-	private Date bookingsCloseTime;
+	private String startDate;
+	private String endDate;
+	private String bookingsCloseTime;
 	private String location;
 	private String address;
 	private String description;

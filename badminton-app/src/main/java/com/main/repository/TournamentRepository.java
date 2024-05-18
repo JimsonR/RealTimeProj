@@ -1,5 +1,6 @@
 package com.main.repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -67,15 +68,15 @@ public interface TournamentRepository extends JpaRepository<Tournament, Integer>
 	@Transactional
 	@Modifying
 	@Query(nativeQuery = true,value = "update table tournament set start_date=?1 where tournament_id = ?2")
-	void updateStartDate(Date startDate, int tournamentId);
+	void updateStartDate(LocalDate localDate, int tournamentId);
 	@Transactional
 	@Modifying
 	@Query(nativeQuery = true,value = "update table tournament set end_date=?1 where tournament_id = ?2")
-	void updateEndDate(Date endDate, int tournamentId);
+	void updateEndDate(LocalDate endDate, int tournamentId);
 	@Transactional
 	@Modifying
 	@Query(nativeQuery = true,value = "update table tournament set update_bookings_close_time=?1 where tournament_id = ?2")
-	void updateBookingsCloseTime(Date bookingsCloseTime, int tournamentId);
+	void updateBookingsCloseTime(LocalDate bookingsCloseTime, int tournamentId);
 	@Transactional
 	@Modifying
 	@Query(nativeQuery = true,value = "update table tournament set poster=?1, set sponsor_poster = ?2 where tournament_id = ?3")

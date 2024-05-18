@@ -1,16 +1,13 @@
 package com.main.model; 
 
-import java.util.Date;
-
-import com.main.entity.Teams;
-import com.main.entity.TeamsNEventId;
+import java.time.LocalDate;
 
 public interface QueryResponse {
 	String getTournamentName();
 	byte[] getPoster();
 	String getTournamentId();
-	Date getStartDate();
-	Date getEndDate();
+	LocalDate getStartDate();
+	LocalDate getEndDate();
 	String getAddress();
 
 //	int getTeamId();

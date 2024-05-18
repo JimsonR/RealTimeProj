@@ -53,7 +53,7 @@ public class RequestController {
 	private final EventsService eventsService;
 	@GetMapping("/ab")
 	String index() {
-		System.out.println("hello");
+		System.out.println("hello");	
 		return "hello";
 	} 
 
@@ -155,8 +155,9 @@ public class RequestController {
 	}
 
 	@PostMapping(path = "/createTournament")
-	int createTournamentRequest(@RequestBody CreateTournamentModel createTournamentModel, HttpServletRequest request)
+	int createTournamentRequest(@ModelAttribute CreateTournamentModel createTournamentModel, HttpServletRequest request)
 			throws IOException {
+		System.out.println("tournament Name: "+createTournamentModel.getTournamentName());
 		return tournamentService.handleCreateOrginizationRequest(createTournamentModel, request);
 	}
 

@@ -2,6 +2,7 @@ package com.main.service;
 
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import com.main.model.EditTournamentDTO;
 import com.main.model.EditTournamentModel;
@@ -32,15 +33,15 @@ public class TournamentService {
 		Tournament newTournament =  Tournament.builder()
 				.organizationId(loggedInOrganization)
 				.tournamentName(createTournamentModel.getTournamentName())
-				.startDate(createTournamentModel.getStartDate())
-				.endDate(createTournamentModel.getEndDate())
-				.bookingsCloseTime(createTournamentModel.getBookingsCloseTime())
+				.startDate(LocalDate.parse(createTournamentModel.getStartDate()))
+				.endDate(LocalDate.parse(createTournamentModel.getEndDate()))
+				.bookingsCloseTime(LocalDate.parse(createTournamentModel.getBookingsCloseTime()))
 				.location(createTournamentModel.getLocation())
 				.address(createTournamentModel.getAddress())
 				.description(createTournamentModel.getDescription())
 				.sponsors(createTournamentModel.getSponsors())
-				.poster(createTournamentModel.getPoster().getBytes())
-				.sponsorPoster(createTournamentModel.getSponsorPoster().getBytes())
+				.poster(createTournamentModel.getPoster()!= null? createTournamentModel.getPoster().getBytes(): null)
+				.sponsorPoster(createTournamentModel.getSponsorPoster()!= null? createTournamentModel.getSponsorPoster().getBytes(): null)
 				.build();
 		tournamentRepository.save(newTournament);
 //		System.out.println(Base64.decodeBase64(createTournamentModel.getPoster()));
@@ -68,13 +69,13 @@ public class TournamentService {
 				tournamentRepository.updateSponsors(current.getSponsors(),previous.getTournamentId());
 			}
 			if (!previous.getStartDate().equals(current.getStartDate())) {
-				tournamentRepository.updateStartDate(current.getStartDate(),previous.getTournamentId());
+				tournamentRepository.updateStartDate(LocalDate.parse(current.getStartDate()),previous.getTournamentId());
 			}
 			if (!previous.getEndDate().equals(current.getEndDate())) {
-				tournamentRepository.updateEndDate(current.getEndDate(),previous.getTournamentId());
+				tournamentRepository.updateEndDate(LocalDate.parse(current.getEndDate()),previous.getTournamentId());
 			}
 			if (!previous.getBookingsCloseTime().equals(current.getBookingsCloseTime())) {
-				tournamentRepository.updateBookingsCloseTime(current.getBookingsCloseTime(),previous.getTournamentId());
+				tournamentRepository.updateBookingsCloseTime(LocalDate.parse(current.getBookingsCloseTime()),previous.getTournamentId());
 			}
 			tournamentRepository.updateFiles(current.getPoster(), current.getSponsorPoster(),previous.getTournamentId());
 			return 1;

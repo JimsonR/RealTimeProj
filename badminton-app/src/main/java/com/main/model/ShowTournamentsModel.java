@@ -1,15 +1,12 @@
 package com.main.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.main.entity.Organization;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @Data
@@ -18,9 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class ShowTournamentsModel {
 
 	private String tournamentName;
-	private Date startDate;
-	private Date endDate;
-	private Date bookingsCloseTime;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	private LocalDate bookingsCloseTime;
 	private String location;
 	private String address;
 	private String description;
