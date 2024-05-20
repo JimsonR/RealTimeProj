@@ -13,9 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("com.main.entity")
 @SpringBootApplication
 public class BadmintonAppApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(BadmintonAppApplication.class, args);
 	}
-
 }

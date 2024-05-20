@@ -2,6 +2,7 @@ package com.main.service;
 
 import java.util.List;
 
+import com.main.entity.Event;
 import org.springframework.stereotype.Service;
 
 import com.main.model.GetEventsForTournamentProjection;
@@ -17,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 public class GetEventsForTournamentService {
 	private final EventRepository eventRepository;
-	public List<String> getEvents(int tournamentId) {
+	public List<GetEventsForTournamentProjection> getEvents(int tournamentId) {
 		return eventRepository.getEventsByTournamentId(tournamentId);
 	}
 }

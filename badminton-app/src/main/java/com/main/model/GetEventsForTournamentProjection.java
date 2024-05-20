@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 
 public interface GetEventsForTournamentProjection {
 	
-	String getEventNames();
+	String getEventName();
+	int getEventId();
 }

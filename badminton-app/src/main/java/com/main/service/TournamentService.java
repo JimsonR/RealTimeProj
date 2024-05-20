@@ -4,10 +4,9 @@ package com.main.service;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import com.main.model.CreateTournamentAndEventsModel;
 import com.main.model.EditTournamentDTO;
 import com.main.model.EditTournamentModel;
-import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import com.main.entity.Organization;
@@ -18,6 +17,8 @@ import com.main.repository.TournamentRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 @Service
 @RequiredArgsConstructor
 public class TournamentService {
@@ -26,8 +27,8 @@ public class TournamentService {
 	private final TournamentRepository  tournamentRepository;
 	private final TokenValidationService tokenValidationService;
 
-	public int handleCreateOrginizationRequest(CreateTournamentModel createTournamentModel,
-			HttpServletRequest request) throws IOException {
+	public int handleCreateTournamentRequest(CreateTournamentAndEventsModel createTournamentModel,
+											 HttpServletRequest request) throws IOException {
 		
 		Organization loggedInOrganization = organizationRepository.getLoggedInOrganization(tokenValidationService.loadUserEmail(request.getHeader("Authorization").substring(7)));
 		Tournament newTournament =  Tournament.builder()
@@ -43,9 +44,9 @@ public class TournamentService {
 				.poster(createTournamentModel.getPoster()!= null? createTournamentModel.getPoster().getBytes(): null)
 				.sponsorPoster(createTournamentModel.getSponsorPoster()!= null? createTournamentModel.getSponsorPoster().getBytes(): null)
 				.build();
-		tournamentRepository.save(newTournament);
+		return tournamentRepository.save(newTournament).getTournamentId();
 //		System.out.println(Base64.decodeBase64(createTournamentModel.getPoster()));
-		return 100;
+		//return 100;
 	}
 
     public int handleEditTournamentRequest(EditTournamentDTO editTournamentDTO) {

@@ -24,7 +24,7 @@ public class TokenGenerationService {
 		 .addClaims(new HashMap<String, Object>())
 		 .setSubject(user.getUsername())
 		 .setIssuedAt(new Date(System.currentTimeMillis()))
-		 .setExpiration(new Date(System.currentTimeMillis() + 80 * 1000 * 24 ))
+//		 .setExpiration(new Date(System.currentTimeMillis() + 80 * 1000 * 24 ))
 		 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
 		 .compact();
 		 

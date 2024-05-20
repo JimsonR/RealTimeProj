@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @Data
@@ -23,16 +24,18 @@ public class EventService {
 	 private final TournamentRepository tournamentRepository;
 	 private final EventRepository eventRepository;
 	 
-	public int handleCreateEventRequest(List<CreateEventModel> createEventModel,int tournamentId) {
+	public int handleCreateEventRequest(List<CreateEventModel> createEventModel, int tournamentId) {
 		Tournament tournament = tournamentRepository.findByTournamentId(tournamentId);
 		for(CreateEventModel event:createEventModel) {
 			Event newEvent = Event.builder()
-					.category(event.getCategory())
+					.EventName(event.getEventName())
+					.category(event.getEventType())
 					.tournamentId(tournament)
 					.matchType(event.getMatchType())
 					.entryFee(event.getEntryFee())
-					.qualifiersPerPool(event.getQualifiersPerPool())
-					.totalPools(event.getTotalPools())
+					.maxEntries(event.getMaxEntries())
+//					.qualifiersPerPool(event.getQualifiersPerPool())
+//					.totalPools(event.getTotalPools())
 //					.allowBookings(event.getAllowBookings())
 					.build();
 			

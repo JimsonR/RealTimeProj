@@ -15,8 +15,8 @@ public interface EventRepository extends JpaRepository<Event, Integer>{
 
 	Event findByEventId(int eventId);
 
-	@Query(nativeQuery = true,value="select e.event_name from event e where e.tournament_id = ?1")
-	List<String> getEventsByTournamentId(int tournamentId);
+	@Query(nativeQuery = true,value="select e.event_name  as EventName, e.event_id as EventId from event e where e.tournament_id = ?1")
+	List<GetEventsForTournamentProjection> getEventsByTournamentId(int tournamentId);
 	
 	@Query(nativeQuery=true,value="select e.event_name as EventName,"
 			+ "e.category as Category,"

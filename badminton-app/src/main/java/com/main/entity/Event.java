@@ -32,7 +32,7 @@ public class Event {
 	private int entryFee;
 	private int maxEntries;
 	private int discount;
-//	private boolean allowBookings=true;
+	private boolean allowBookings=true;
 	
 	//will fill during fixture generation
 	private int totalRounds;

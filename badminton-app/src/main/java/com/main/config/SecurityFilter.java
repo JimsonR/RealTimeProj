@@ -42,14 +42,14 @@ public class SecurityFilter extends OncePerRequestFilter {
 		String emailId = tokenValidationService.loadUserEmail(jwtToken);
 		if (emailId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			// Need to add refresh token logic for token expired cases
-			if (!tokenValidationService.isTokenExpaired(jwtToken)) {
+//			if (!tokenValidationService.isTokenExpaired(jwtToken)) {
 
 				UserDetails userDetails = this.userDetailsService.loadUserByUsername(emailId);
 				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(emailId, null,
 						userDetails.getAuthorities());
 				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authToken);
-			}
+//			}
 		}
 
 		filterChain.doFilter(request, response);
