@@ -50,4 +50,23 @@ public class EventService {
 //		private int maxEntries;
 //		private boolean allowBookings;
 	}
+
+public int handleEditEventRequest(List<CreateEventModel> createEventModel, int tournamentId) {
+	Tournament tournament = tournamentRepository.findByTournamentId(tournamentId);
+	List<Event> events = eventRepository.findByTournamentId(tournament);
+	int i = 0;
+	for(Event event:events) {
+		event.setEventName(createEventModel.get(i++).getEventName());
+
+		eventRepository.save(event);
+	}
+
+	return 100;
+//		Tournament tournamentId;
+//		private int category;
+//		private int matchType;
+//		private int entryFee;
+//		private int maxEntries;
+//		private boolean allowBookings;
+}
 }

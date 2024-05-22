@@ -206,6 +206,11 @@ public class RequestController {
 	int createEventRequest(@RequestBody List<CreateEventModel> createEventModel,HttpServletRequest request) {
 		return eventService.handleCreateEventRequest(createEventModel,Integer.valueOf(request.getHeader("tournamentId")));
 	}
+
+	@PostMapping("/editEvents")
+	int EditEventsRequest(@RequestBody List<CreateEventModel> createEventModel,HttpServletRequest request) {
+		return eventService.handleCreateEventRequest(createEventModel,Integer.valueOf(request.getHeader("tournamentId")));
+	}
 //	
 	@GetMapping("/generateTeams")
 	int generateTeams() {

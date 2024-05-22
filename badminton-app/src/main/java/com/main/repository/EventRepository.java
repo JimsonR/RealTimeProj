@@ -2,6 +2,7 @@ package com.main.repository;
 
 import java.util.List;
 
+import com.main.entity.Tournament;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,4 +26,6 @@ public interface EventRepository extends JpaRepository<Event, Integer>{
 			+ "e.discount as Discount,"
 			+ "e.max_entries as MaxEntries from  event e where e.tournament_id = ?1")
 	List<GetEventsForEditTournamentProjection> getByTournamentId(int tournamentId);
+
+	List<Event> findByTournamentId(Tournament tournament);
 }
