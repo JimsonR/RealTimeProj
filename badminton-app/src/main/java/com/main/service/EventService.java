@@ -50,18 +50,66 @@ public class EventService {
 //		private int maxEntries;
 //		private boolean allowBookings;
 	}
+	
+	private void createSingleEvent(CreateEventModel event,Tournament tournament) {
+		Event newEvent = Event.builder()
+				.EventName(event.getEventName())
+				.category(event.getEventType())
+				.tournamentId(tournament)
+				.matchType(event.getMatchType())
+				.entryFee(event.getEntryFee())
+				.maxEntries(event.getMaxEntries())
+				.discount(event.getDiscount())
+//				.qualifiersPerPool(event.getQualifiersPerPool())
+//				.totalPools(event.getTotalPools())
+//				.allowBookings(event.getAllowBookings())
+				.build();
+		
+		 eventRepository.save(newEvent);
+	}
 
 public int handleEditEventRequest(List<CreateEventModel> createEventModel, int tournamentId) {
 	Tournament tournament = tournamentRepository.findByTournamentId(tournamentId);
 	List<Event> events = eventRepository.findByTournamentId(tournament);
 	int i = 0;
-	for(Event event:events) {
-		event.setEventName(createEventModel.get(i++).getEventName());
-
-		eventRepository.save(event);
+	if(createEventModel.size() > events.size()) {
+		for(Event event:events) {
+			event.setEventName(createEventModel.get(i).getEventName());
+			event.setCategory(createEventModel.get(i).getEventType());
+			event.setMatchType(createEventModel.get(i).getMatchType());
+			event.setEntryFee(createEventModel.get(i).getEntryFee());
+			event.setMaxEntries(createEventModel.get(i).getMaxEntries());
+			event.setDiscount(createEventModel.get(i).getDiscount());
+			eventRepository.save(event);
+			i++;
+		}
+		while(i < createEventModel.size()) {
+			this.createSingleEvent(createEventModel.get(i++), tournament);
+		}
+		return 100;
 	}
-
-	return 100;
+	else if(createEventModel.size() < events.size()) {
+		int diff = events.size() - createEventModel.size();
+		
+		for(CreateEventModel createEvent:createEventModel ) {
+			events.get(i).setEventName(createEvent.getEventName());
+			events.get(i).setCategory(createEvent.getEventType());
+			events.get(i).setMatchType(createEvent.getMatchType());
+			events.get(i).setEntryFee(createEvent.getEntryFee());
+			events.get(i).setMaxEntries(createEvent.getMaxEntries());
+			events.get(i).setDiscount(createEvent.getDiscount());
+			i++;
+			eventRepository.save(events.get(i));
+		}
+		while(i < events.size()) {
+			eventRepository.delete(events.get(i++));
+		}
+		return 100;
+	}
+	else {
+		return 1;
+	}
+	
 //		Tournament tournamentId;
 //		private int category;
 //		private int matchType;
