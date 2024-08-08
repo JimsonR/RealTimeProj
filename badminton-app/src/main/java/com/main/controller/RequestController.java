@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.main.model.*;
+import com.main.service.*;
 import jakarta.transaction.Transactional;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.main.entity.Event;
 import com.main.entity.Tournament;
 import com.main.repository.TournamentRepository;
-import com.main.service.EventService;
-import com.main.service.EventsService;
-import com.main.service.GenerateFixtureService;
-import com.main.service.GenerateTeamsService;
-import com.main.service.GetEventsForTournamentService;
 //import com.main.service.GenerateFixtureService;
-import com.main.service.OrganizationService;
-import com.main.service.PromoteRRToEliminationService;
-import com.main.service.PromoteWinnerService;
-import com.main.service.ServiceImpl;
-import com.main.service.ShowTournamentsService;
-import com.main.service.TournamentService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +42,8 @@ public class RequestController {
 	private final GetEventsForTournamentService getEventsForTournamentService;
 	TournamentRepository tournamentRepository;
 	private final EventsService eventsService;
+	private final MatchesService matchesService;
+
 	@GetMapping("/ab")
 	String index() {
 		System.out.println("hello");	
@@ -235,6 +227,11 @@ public class RequestController {
 		return 200;
 	}
 
+	@GetMapping("/getMatches")
+	int getMatches(@RequestParam("eventId")int eventId,@RequestParam("tournamentId")int tournamentId){
+		return matchesService.handleGetMatchesRequest(eventId,tournamentId);
+
+	}
 
 	
 	
