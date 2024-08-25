@@ -228,8 +228,8 @@ public class RequestController {
 	}
 
 	@GetMapping("/getMatches")
-	int getMatches(@RequestParam("eventId")int eventId,@RequestParam("tournamentId")int tournamentId){
-		return matchesService.handleGetMatchesRequest(eventId,tournamentId);
+	List<List<MatchesProjection>> getMatches(@RequestParam("eventId")int eventId){
+		return matchesService.handleGetMatchesRequest(eventId);
 
 	}
 

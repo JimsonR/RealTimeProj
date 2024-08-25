@@ -28,4 +28,7 @@ public interface EventRepository extends JpaRepository<Event, Integer>{
 	List<GetEventsForEditTournamentProjection> getByTournamentId(int tournamentId);
 
 	List<Event> findByTournamentId(Tournament tournament);
+
+	@Query(nativeQuery = true,value = "select total_rounds from event where event_id = ?1")
+	int getTotalRoundsByEventId(int eventId);
 }
