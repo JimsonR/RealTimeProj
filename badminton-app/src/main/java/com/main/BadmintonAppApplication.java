@@ -17,3 +17,4 @@ public class BadmintonAppApplication {
 		SpringApplication.run(BadmintonAppApplication.class, args);
 	}
 }
+ 

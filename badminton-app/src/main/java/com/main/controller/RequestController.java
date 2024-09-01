@@ -9,15 +9,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.main.model.*;
 import com.main.service.*;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.main.entity.Event;
 import com.main.entity.Tournament;
@@ -43,6 +38,7 @@ public class RequestController {
 	TournamentRepository tournamentRepository;
 	private final EventsService eventsService;
 	private final MatchesService matchesService;
+	private final ByesService byesService;
 
 	@GetMapping("/ab")
 	String index() {
@@ -232,7 +228,30 @@ public class RequestController {
 		return matchesService.handleGetMatchesRequest(eventId);
 
 	}
+	@GetMapping("/getByes")
+	List<ByesForMatchesProjection>getByesForMatches(@RequestParam("eventId")int eventId){
+		return byesService.handleGetByesForMatches(eventId);
+	}
 
+	@PutMapping("/replaceTeamsFromMatches")
+	ResponseEntity<List<MatchesProjection>>replaceTeamsFromMatches(@RequestBody ReplaceTeamsFromMatchesModel replaceTeamsFromMatchesModel){
+//		try{
+//		}
+//		catch(Exception e){
+//			return new ResponseEntity<>(-1, HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+		return new ResponseEntity<>(matchesService.handleReplaceTeamsFromMatches(replaceTeamsFromMatchesModel),HttpStatus.OK);
+	}
+
+	@PutMapping("/replaceTeamsFromByes")
+	ResponseEntity<List<MatchesProjection>>replaceTeamsFromByes(@RequestBody ReplaceTeamsFromByesModel replaceTeamsFromByesModel){
+//		try{
+//		}
+//		catch(Exception e){
+//			return new ResponseEntity<>(-1, HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+		return new ResponseEntity<>(matchesService.handleReplaceTeamsFromByes(replaceTeamsFromByesModel),HttpStatus.OK);
+	}
 	
 	
 }
