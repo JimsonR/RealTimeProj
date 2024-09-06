@@ -10,7 +10,7 @@ public interface MatchesProjection {
     String getTeam1Id();
     String getTeam2Id();
     String getTotalPoints();
-    int getWinner();
+    Integer getWinner();
     String getSummary();
 
 }

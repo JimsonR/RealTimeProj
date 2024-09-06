@@ -45,17 +45,31 @@ public class PromoteWinnerService {
 		boolean matchExists = matchesRepository.existsByMatchNumberAndRoundAndEventId(nextMatchNumber,match.getRound()+1,match.getEventId());
 		if(matchExists) {
 			Matches newMatch = matchesRepository.findByMatchNumberAndRoundAndEventId(nextMatchNumber,match.getRound()+1,match.getEventId());
-			newMatch.setTeam2Id(winner);
+			if(match.getMatchNumber() % 2 == 1)
+				newMatch.setTeam1Id(winner);
+			else
+				newMatch.setTeam2Id(winner);
 			matchesRepository.save(newMatch);
 		}
 		else {
-			Matches newMatch = Matches.builder()
-					.team1Id(winner)
-					.round(match.getRound() + 1)
-					.matchNumber(nextMatchNumber)
-					.eventId(match.getEventId())
-					.build();
-			matchesRepository.save(newMatch);
+			if(match.getMatchNumber() % 2 == 1) {
+				Matches newMatch = Matches.builder()
+						.team1Id(winner)
+						.round(match.getRound() + 1)
+						.matchNumber(nextMatchNumber)
+						.eventId(match.getEventId())
+						.build();
+				matchesRepository.save(newMatch);
+			}
+			else{
+				Matches newMatch = Matches.builder()
+						.team2Id(winner)
+						.round(match.getRound() + 1)
+						.matchNumber(nextMatchNumber)
+						.eventId(match.getEventId())
+						.build();
+				matchesRepository.save(newMatch);
+			}
 		}
 		
 		return 200;
