@@ -1,14 +1,20 @@
 package com.main.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Members {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int memberId;
     private String email;
     private String name;
@@ -17,8 +23,5 @@ public class Members {
     @JoinColumn(name = "organization")
     @ManyToOne
     private Organization organization;
-
-
-
 
 }
