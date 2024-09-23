@@ -23,5 +23,4 @@ public class Members {
     @JoinColumn(name = "organization")
     @ManyToOne
     private Organization organization;
-
 }

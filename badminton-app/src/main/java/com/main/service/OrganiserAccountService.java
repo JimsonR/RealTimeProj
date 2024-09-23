@@ -1,14 +1,23 @@
 package com.main.service;
 
+import com.main.entity.Users;
+import com.main.model.CreateMemberDTO;
 import com.main.repository.MemberRepository;
+import com.main.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class OrganiserAccountService {
 
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private TokenValidationService tokenValidationService;
 
-public int addMember(){
+public int addMember(CreateMemberDTO createMemberDTO,HttpServletRequest request){
+    Users loggedInUser = userRepository.findByEmailId(tokenValidationService.loadUserEmail(request.getHeader("Authorization").substring(7)));
 
 
 

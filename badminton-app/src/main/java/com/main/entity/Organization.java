@@ -1,5 +1,6 @@
 package com.main.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.annotation.Reference;
 
 import jakarta.persistence.CascadeType;
@@ -14,6 +15,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -31,4 +34,7 @@ public class Organization {
 	private String emailId;
 	private String mobileNumber;
 	private boolean isActive;
+//	@OneToMany(mappedBy = "", cascade = CascadeType.ALL, orphanRemoval = true)
+//	@JsonManagedReference
+//	private List<Members> members;
 }

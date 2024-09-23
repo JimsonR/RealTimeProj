@@ -12,8 +12,6 @@ public class MemberService {
 
     public int createMember( CreateMemberDTO createMemberDTO ){
 
-
-
         Members createMember = Members.builder()
                 .email(createMemberDTO.getEmail())
                 .name(createMemberDTO.getName())
@@ -28,13 +26,13 @@ public class MemberService {
 
     public int removeMember(CreateMemberDTO createMemberDTO){
 
-        Optional<Members> existingMember = memberRepository.findById(createMemberDTO.getId());
-       if(existingMember.isPresent()){
+        Members members = memberRepository.findByEmail(createMemberDTO.getEmail());
+       if(members != null){
             memberRepository.deleteById(createMemberDTO.getId());
         }
        else{
 
-           return 404;
+           return 404 ;
 
        }
 return 201;
@@ -50,13 +48,20 @@ return 201;
             members.setPhoneNumber(createMemberDTO.getPhoneNumber());
             memberRepository.save(members);
         }else{
+
             return 404;
+
         }
 
 
         return 200;
     }
 
+    public int  findMember(String email){
+
+
+        return 200;
+    }
 
 
 
