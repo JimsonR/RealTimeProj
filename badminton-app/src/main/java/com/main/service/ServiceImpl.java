@@ -87,6 +87,7 @@ public class ServiceImpl {
 	 * @param loginModel
 	 * @return
 	 */
+
 	public LoginResponseModel handleLoginRequest(LoginModel loginModel) {
 		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 				loginModel.getEmailId(),loginModel.getPassword()));
@@ -99,10 +100,9 @@ public class ServiceImpl {
 		return response;
 		
 	}
-	
-	
 
-	
+
+
 	public int handleForgotPasswordRequest(ForgotPasswordModel forgotPasswordModel,HttpServletRequest request) {
 		Users user = userRepository.findByEmailId(forgotPasswordModel.getEmailId());
 		if(user == null)

@@ -3,6 +3,7 @@ package com.main.controller;
 import java.util.List;
 
 import com.main.service.admin.AdminRevenueService;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,10 +33,11 @@ public class AdminController {
 		return "hello";
 	} 
 	
-	@PostMapping("/activateTournament")
+	@PostMapping("/activateTournament" )
 	int activateTournament(@RequestBody AdminTournamentActivationModel activationModel) {
+
 		return adminTournamentService.handleActivateTournamentRequest(activationModel);
-		
+
 	}
 
 	@GetMapping("/getTournaments")
@@ -43,9 +45,10 @@ public class AdminController {
 		return adminTournamentService.handleGetAdminTournamentDetailsRequest();
 	}
 	
-	
+
 	@PostMapping("/activateOrganization")
 	int activateOrganization(@RequestBody AdminOrganizationActivationModel activationModel) {
+
 		return adminOrganizationService.handleActivateOrganizationRequest(activationModel);
 		
 	}
