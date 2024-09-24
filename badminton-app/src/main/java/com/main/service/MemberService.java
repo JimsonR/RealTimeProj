@@ -3,9 +3,10 @@ package com.main.service;
 import com.main.entity.Members;
 import com.main.model.CreateMemberDTO;
 import com.main.repository.MemberRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
+@Service
 public class MemberService {
 
     private MemberRepository memberRepository;

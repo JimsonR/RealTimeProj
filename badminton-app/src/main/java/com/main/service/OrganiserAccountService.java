@@ -6,7 +6,9 @@ import com.main.repository.MemberRepository;
 import com.main.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class OrganiserAccountService {
 
     @Autowired
