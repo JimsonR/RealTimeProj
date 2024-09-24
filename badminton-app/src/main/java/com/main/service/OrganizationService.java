@@ -42,12 +42,12 @@ public class OrganizationService {
 	}
 
 	public int addMember(CreateMemberDTO createMemberDTO, HttpServletRequest request){
+
 		Users loggedInUser = userRepository.findByEmailId(tokenValidationService.loadUserEmail(request.getHeader("Authorization").substring(7)));
 
 		Organization organization = organizationRepository.getLoggedInOrganization(loggedInUser.getEmailId());
 
 		createMemberDTO.setOrganisationId(organization);
-
 
 		memberService.createMember(createMemberDTO);
 
